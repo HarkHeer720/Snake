@@ -14,7 +14,6 @@ namespace Snake
     {
         //creating lists
         List<Rectangle> playerBody = new List<Rectangle>();
-        //List<Rectangle> appleList = new List<Rectangle>();
         List<Rectangle> grid = new List<Rectangle>();
 
         //creating rectangles
@@ -30,6 +29,13 @@ namespace Snake
         int lastDirection = 0; // 1 = up, 2 = left, 3 = down, 4 = right
         int playerTailX;
         int playerTailY;
+        int playerHeadX;
+        int playerHeadY;
+        int currentDirection = 1;
+        int lastSquareX;
+        int lastSquareY;
+        int currentSquareX;
+        int currentSquareY;
 
         //creating key presses
         bool wDown = false;
@@ -38,7 +44,8 @@ namespace Snake
         bool dDown = false;
 
         //creating brushes
-        SolidBrush greenBrush = new SolidBrush(Color.LimeGreen);
+        SolidBrush greenBrush = new SolidBrush(Color.Green);
+        SolidBrush limeGreenBrush = new SolidBrush(Color.LimeGreen);
         SolidBrush redBrush = new SolidBrush(Color.Red);
 
         public Form1()
@@ -50,8 +57,8 @@ namespace Snake
             playerBody.Clear();
             playerScore = 0;
 
-            playerHead.X = 40;
-            playerHead.Y = 40;
+            Rectangle square = new Rectangle(40, 40, 20, 20);
+            playerBody.Add(square);
 
             wDown = false;
             aDown = false;
@@ -150,43 +157,284 @@ namespace Snake
             //move the player if they change their direction of movement
             if (wDown == true && lastDirection != 3)
             {
-                playerHead.Y -= playerSpeed;
+                for(int i = 0; i < playerBody.Count; i++)
+                {
+                    int X = playerBody[i].X - playerSpeed;
+                    Rectangle player = new Rectangle(X, playerBody[i].Y, 20, 20);
+                    playerBody.Insert(0, player);
+                }
                 lastDirection = 1;
+
+                //if (currentDirection == lastDirection)
+                //{
+
+                //}
+                //else if (currentDirection != lastDirection)
+                //{
+                //    playerHeadX = playerHead.X;
+                //    playerHeadY = playerHead.Y;
+                //}
+
+                //for (int i = 0; i < playerBody.Count; i++)
+                //{
+                //    if (lastSquareX == 0)
+                //    {
+                //        lastSquareX = playerHead.X;
+                //    }
+                //    if (lastSquareY == 0)
+                //    {
+                //        lastSquareY = playerHead.Y;
+                //    }
+                //    currentSquareX = playerBody[i].X;
+                //    currentSquareY = playerBody[i].Y;
+                //    playerBody[i] = new Rectangle(lastSquareX, lastSquareY, 20, 20);
+                //    lastSquareX = currentSquareX;
+                //    lastSquareY = currentSquareY;
+                //}
+                /*
+                if (lastDirection == 0)
+                {
+
+                }
+                else if (lastDirection > 0 && currentDirection != lastDirection)
+                {
+                    turnPointX = playerHead.X;
+                    turnPointY = playerHead.Y;
+                }
+
+
+                for (int i = 0; i < playerBody.Count; i++)
+                {
+                    if (playerBody[i].X == turnPointX && playerBody[i].Y == turnPointY)
+                    {
+                        int Y = playerBody[i].Y - playerSpeed;
+                        playerBody[i] = new Rectangle(playerBody[i].X, Y, 20, 20);
+                    }
+                    if (playerBody[i].Y != turnPointY && lastDirection == 2)
+                    {
+                        int X = playerBody[i].X - playerSpeed;
+                        playerBody[i] = new Rectangle(X, playerBody[i].Y, 20, 20);
+                    }
+                    if (playerBody[i].Y != turnPointY && lastDirection == 4)
+                    {
+                        int X = playerBody[i].X + playerSpeed;
+                        playerBody[i] = new Rectangle(X, playerBody[i].Y, 20, 20);
+                    }
+                }
+                */
+            }
+            if (aDown == true && lastDirection != 4)
+            {
                 for (int i = 0; i < playerBody.Count; i++)
                 {
                     int Y = playerBody[i].Y - playerSpeed;
-                    playerBody[i] = new Rectangle(playerBody[i].X, Y, 20, 20);
+                    Rectangle player = new Rectangle(playerBody[i].X, Y, 20, 20);
+                    playerBody.Insert(0, player);
                 }
-            }
-            else if (aDown == true && lastDirection != 4)
-            {
+                //currentDirection = 2;
+                //if (currentDirection == lastDirection)
+                //{
+
+                //}
+                //else if (currentDirection != lastDirection)
+                //{
+                //    playerHeadX = playerHead.X;
+                //    playerHeadY = playerHead.Y;
+                //}
+                //playerHead.X -= playerSpeed;
+
+                //for (int i = 0; i < playerBody.Count; i++)
+                //{
+                //    if (lastSquareX == 0)
+                //    {
+                //        lastSquareX = playerHead.X;
+                //    }
+                //    if (lastSquareY == 0)
+                //    {
+                //        lastSquareY = playerHead.Y;
+                //    }
+                //    currentSquareX = playerBody[i].X;
+                //    currentSquareY = playerBody[i].Y;
+                //    playerBody[i] = new Rectangle(lastSquareX, lastSquareY, 20, 20);
+                //    lastSquareX = currentSquareX;
+                //    lastSquareY = currentSquareY;
+                //}
+                /*
+                currentDirection = 2;
+                if (lastDirection == 0)
+                {
+
+                }
+                else if (lastDirection > 0 && currentDirection != lastDirection)
+                {
+                    turnPointX = playerHead.X;
+                    turnPointY = playerHead.Y;
+                }
+
+                for (int i = 0; i < playerBody.Count; i++)
+                {
+                    if (playerBody[i].X == turnPointX && playerBody[i].Y == turnPointY)
+                    {
+                        int X = playerBody[i].X - playerSpeed;
+                        playerBody[i] = new Rectangle(X, playerBody[i].Y, 20, 20);
+                    }
+                    if (playerBody[i].X != turnPointX && lastDirection == 1)
+                    {
+                        int Y = playerBody[i].Y - playerSpeed;
+                        playerBody[i] = new Rectangle(playerBody[i].X, Y, 20, 20);
+                    }
+                    if (playerBody[i].X != turnPointX && lastDirection == 3)
+                    {
+                        int Y = playerBody[i].Y + playerSpeed;
+                        playerBody[i] = new Rectangle(playerBody[i].X, Y, 20, 20);
+                    }
+                }
                 playerHead.X -= playerSpeed;
+                */
                 lastDirection = 2;
-                for (int i = 0; i < playerBody.Count; i++)
-                {
-                    int X = playerBody[i].X - playerSpeed;
-                    playerBody[i] = new Rectangle(X, playerBody[i].Y, 20, 20);
-                }
             }
-            else if (sDown == true && lastDirection != 1)
+            if (sDown == true && lastDirection != 1)
             {
-                playerHead.Y += playerSpeed;
-                lastDirection = 3;
-                for (int i = 0; i < playerBody.Count; i++)
-                {
-                    int Y = playerBody[i].Y + playerSpeed;
-                    playerBody[i] = new Rectangle(playerBody[i].X, Y, 20, 20);
-                }
-            }
-            else if (dDown == true && lastDirection != 2)
-            {
-                playerHead.X += playerSpeed;
-                lastDirection = 4;
                 for (int i = 0; i < playerBody.Count; i++)
                 {
                     int X = playerBody[i].X + playerSpeed;
-                    playerBody[i] = new Rectangle(X, playerBody[i].Y, 20, 20);
+                    Rectangle player = new Rectangle(X, playerBody[i].Y, 20, 20);
+                    playerBody.Insert(0, player);
                 }
+
+                //currentDirection = 3;
+                //if (lastDirection == currentDirection)
+                //{
+
+                //}
+                //else if (lastDirection != currentDirection)
+                //{
+                //    playerHeadX = playerHead.X;
+                //    playerHeadY = playerHead.Y;
+                //}
+                //playerHead.Y += playerSpeed;
+
+                //for (int i = 0; i < playerBody.Count; i++)
+                //{
+                //    if (lastSquareX == 0)
+                //    {
+                //        lastSquareX = playerHead.X;
+                //    }
+                //    if (lastSquareY == 0)
+                //    {
+                //        lastSquareY = playerHead.Y;
+                //    }
+                //    currentSquareX = playerBody[i].X;
+                //    currentSquareY = playerBody[i].Y;
+                //    playerBody[i] = new Rectangle(lastSquareX, lastSquareY, 20, 20);
+                //    lastSquareX = currentSquareX;
+                //    lastSquareY = currentSquareY;
+                //}
+                /*
+                currentDirection = 3;
+                if (lastDirection == 0)
+                {
+
+                }
+                else if (lastDirection > 0 && currentDirection != lastDirection)
+                {
+                    turnPointX = playerHead.X;
+                    turnPointY = playerHead.Y;
+                }
+
+                for (int i = 0; i < playerBody.Count; i++)
+                {
+                    if (playerBody[i].X == turnPointX && playerBody[i].Y == turnPointY)
+                    {
+                        int Y = playerBody[i].Y + playerSpeed;
+                        playerBody[i] = new Rectangle(playerBody[i].X, Y, 20, 20);
+                    }
+                    if (playerBody[i].Y != turnPointY && lastDirection == 2)
+                    {
+                        int X = playerBody[i].X - playerSpeed;
+                        playerBody[i] = new Rectangle(X, playerBody[i].Y, 20, 20);
+                    }
+                    if (playerBody[i].Y != turnPointY && lastDirection == 4)
+                    {
+                        int X = playerBody[i].X + playerSpeed;
+                        playerBody[i] = new Rectangle(X, playerBody[i].Y, 20, 20);
+                    }
+                }
+                playerHead.Y += playerSpeed;
+                */
+                lastDirection = 3;
+            }
+            if (dDown == true && lastDirection != 2)
+            {
+                //create new body part for head at 0
+                for (int i = 0; i < playerBody.Count; i++)
+                {
+                    int Y = playerBody[i].Y + playerSpeed;
+                    Rectangle player = new Rectangle(playerBody[i].X, Y, 20, 20);
+                    playerBody.Insert(0, player);
+                }
+
+                //currentDirection = 4;
+                //if (currentDirection == lastDirection)
+                //{
+
+                //}
+                //else if (currentDirection != lastDirection)
+                //{
+                //    playerHeadX = playerHead.X;
+                //    playerHeadY = playerHead.Y;
+                //}
+                //playerHead.X += playerSpeed;
+
+                //for (int i = 0; i < playerBody.Count; i++)
+                //{
+                //    if (lastSquareX == 0)
+                //    {
+                //        lastSquareX = playerHead.X;
+                //    }
+                //    if (lastSquareY == 0)
+                //    {
+                //        lastSquareY = playerHead.Y;
+                //    }
+                //    currentSquareX = playerBody[i].X;
+                //    currentSquareY = playerBody[i].Y;
+                //    playerBody[i] = new Rectangle(lastSquareX, lastSquareY, 20, 20);
+                //    lastSquareX = currentSquareX;
+                //    lastSquareY = currentSquareY;
+                //}
+                /*
+                currentDirection = 4;
+                if (lastDirection == 0)
+                {
+
+                }
+                else if (lastDirection > 0 && currentDirection != lastDirection)
+                {
+                    turnPointX = playerHead.X;
+                    turnPointY = playerHead.Y;
+                }
+
+                for (int i = 0; i < playerBody.Count; i++)
+                {
+                    if (playerBody[i].X == turnPointX && playerBody[i].Y == turnPointY)
+                    {
+                        int X = playerBody[i].X + playerSpeed;
+                        playerBody[i] = new Rectangle(X, playerBody[i].Y, 20, 20);
+                    }
+                    if (playerBody[i].X != turnPointX && lastDirection == 1)
+                    {
+                        int Y = playerBody[i].Y - playerSpeed;
+                        playerBody[i] = new Rectangle(playerBody[i].X, Y, 20, 20);
+                    }
+                    if (playerBody[i].X != turnPointX && lastDirection == 3)
+                    {
+                        int Y = playerBody[i].Y + playerSpeed;
+                        playerBody[i] = new Rectangle(playerBody[i].X, Y, 20, 20);
+                    }
+                }
+                playerHead.X += playerSpeed;
+                */
+                lastDirection = 4;
             }
 
             //checking if the player has collided with a wall
@@ -208,9 +456,9 @@ namespace Snake
             }
 
             //checking if the player colided with the body of the snake
-            for (int i = 0;i < playerBody.Count;i++)
+            for (int i = 0; i < playerBody.Count; i++)
             {
-                if(playerHead.IntersectsWith(playerBody[i]) && i > 1)
+                if (playerHead.IntersectsWith(playerBody[i]) && i > 1)
                 {
                     gameState = "lost";
                 }
@@ -275,7 +523,6 @@ namespace Snake
                     }
                 }
             }
-
             Refresh();
         }
 
@@ -293,10 +540,10 @@ namespace Snake
                 scoreLabel.Text = $"{playerScore}";
 
                 e.Graphics.FillRectangle(redBrush, apple);
-                e.Graphics.FillRectangle(greenBrush, playerHead);
+                //e.Graphics.FillRectangle(greenBrush, playerHead);
                 for (int i = 0; i < playerBody.Count; i++)
                 {
-                    e.Graphics.FillRectangle(greenBrush, playerBody[i]);
+                    e.Graphics.FillRectangle(limeGreenBrush, playerBody[i]);
                 }
             }
             else if (gameState == "won")
