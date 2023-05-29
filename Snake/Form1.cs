@@ -157,7 +157,7 @@ namespace Snake
             //move the player if they change their direction of movement
             if (wDown == true && lastDirection != 3)
             {
-                for(int i = 0; i < playerBody.Count; i++)
+                for (int i = 0; i < playerBody.Count; i++)
                 {
                     int X = playerBody[i].X - playerSpeed;
                     Rectangle player = new Rectangle(X, playerBody[i].Y, 20, 20);
@@ -227,10 +227,11 @@ namespace Snake
             {
                 for (int i = 0; i < playerBody.Count; i++)
                 {
-                    int Y = playerBody[i].Y - playerSpeed;
-                    Rectangle player = new Rectangle(playerBody[i].X, Y, 20, 20);
+                    int Y = playerBody[i].X - playerSpeed;
+                    Rectangle player = new Rectangle(playerBody[0].X, Y, 20, 20);
                     playerBody.Insert(0, player);
                 }
+
                 //currentDirection = 2;
                 //if (currentDirection == lastDirection)
                 //{
@@ -295,11 +296,13 @@ namespace Snake
             }
             if (sDown == true && lastDirection != 1)
             {
-                for (int i = 0; i < playerBody.Count; i++)
+                //do this for all movement directions
+                int Y = playerBody[0].Y + playerSpeed;
+                Rectangle player = new Rectangle(playerBody[0].X, Y, 20, 20);
+                playerBody.Insert(0, player);
+                if (playerBody.Count > 1)
                 {
-                    int X = playerBody[i].X + playerSpeed;
-                    Rectangle player = new Rectangle(X, playerBody[i].Y, 20, 20);
-                    playerBody.Insert(0, player);
+                    playerBody.RemoveAt(playerBody.Count - 1);
                 }
 
                 //currentDirection = 3;
@@ -369,7 +372,7 @@ namespace Snake
                 //create new body part for head at 0
                 for (int i = 0; i < playerBody.Count; i++)
                 {
-                    int Y = playerBody[i].Y + playerSpeed;
+                    int X = playerBody[i].X + playerSpeed;
                     Rectangle player = new Rectangle(playerBody[i].X, Y, 20, 20);
                     playerBody.Insert(0, player);
                 }
