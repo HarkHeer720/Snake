@@ -33,10 +33,12 @@
             this.titleLabel = new System.Windows.Forms.Label();
             this.subtitleLabel = new System.Windows.Forms.Label();
             this.scoreLabel = new System.Windows.Forms.Label();
+            this.scoreLabel2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // gameTimer
             // 
+            this.gameTimer.Interval = 125;
             this.gameTimer.Tick += new System.EventHandler(this.gameTimer_Tick);
             // 
             // titleLabel
@@ -74,12 +76,24 @@
             this.scoreLabel.Size = new System.Drawing.Size(0, 25);
             this.scoreLabel.TabIndex = 2;
             // 
+            // scoreLabel2
+            // 
+            this.scoreLabel2.AutoSize = true;
+            this.scoreLabel2.BackColor = System.Drawing.Color.Transparent;
+            this.scoreLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.scoreLabel2.ForeColor = System.Drawing.Color.White;
+            this.scoreLabel2.Location = new System.Drawing.Point(19, 9);
+            this.scoreLabel2.Name = "scoreLabel2";
+            this.scoreLabel2.Size = new System.Drawing.Size(0, 25);
+            this.scoreLabel2.TabIndex = 3;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(600, 400);
+            this.Controls.Add(this.scoreLabel2);
             this.Controls.Add(this.scoreLabel);
             this.Controls.Add(this.subtitleLabel);
             this.Controls.Add(this.titleLabel);
@@ -101,6 +115,7 @@
         private System.Windows.Forms.Label titleLabel;
         private System.Windows.Forms.Label subtitleLabel;
         private System.Windows.Forms.Label scoreLabel;
+        private System.Windows.Forms.Label scoreLabel2;
     }
 }
 
