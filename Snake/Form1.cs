@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace Snake
 {
@@ -31,6 +32,10 @@ namespace Snake
         int lastDirection2 = 0; // 1 = up, 2 = left, 3 = down, 4 = right
         int appleY;
         int appleX;
+        int playerX;
+        int playerY;
+        int player2X;
+        int player2Y;
 
         //creating key presses
         bool wDown = false;
@@ -55,10 +60,61 @@ namespace Snake
         public void gameInitializer1Player()
         {
             playerBody.Clear();
-            player1Score = 0;
+            player1Score = 1;
 
-            Rectangle square = new Rectangle(40, 40, 20, 20);
-            playerBody.Add(square);
+            for (int i = 0; i < 10; i++)
+            {
+                randValue = randGen.Next(1, 581);
+                if (i > 2)
+                {
+                    i = 0;
+                }
+                if (randValue % 20 == 0)
+                {
+                    playerX = randValue;
+                    randValue = randGen.Next(1, 381);
+                    if (i > 2)
+                    {
+                        i = 0;
+                    }
+                    if (randValue % 20 == 0)
+                    {
+                        playerY = randValue;
+                        Rectangle square = new Rectangle(playerX, playerY, 20, 20);
+                        playerBody.Add(square);
+                    }
+                }
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                randValue = randGen.Next(1, 581);
+                if (i > 2)
+                {
+                    i = 0;
+                }
+                if (randValue % 20 == 0)
+                {
+                    appleX = randValue;
+                    if (i > 2)
+                    {
+                        i = 0;
+                    }
+                    randValue = randGen.Next(1, 381);
+                    if (randValue % 20 == 0)
+                    {
+                        if (appleX == playerX && appleY == playerY)
+                        {
+                            appleX = 0;
+                            appleY = 0;
+                            i = 0;
+                        }
+                        appleY = randValue;
+                        Rectangle square2 = new Rectangle(100, 200, 20, 20);
+                        player2Body.Add(square2);
+                    }
+                }
+            }
 
             wDown = false;
             aDown = false;
@@ -74,14 +130,91 @@ namespace Snake
             playerBody.Clear();
             player2Body.Clear();
 
-            player1Score = 0;
-            player2Score = 0;
+            player1Score = 1;
+            player2Score = 1;
 
-            Rectangle square = new Rectangle(40, 40, 20, 20);
-            playerBody.Add(square);
+            for (int i = 0; i < 10; i++)
+            {
+                randValue = randGen.Next(1, 581);
+                if (i > 2)
+                {
+                    i = 0;
+                }
+                if (randValue % 20 == 0)
+                {
+                    playerX = randValue;
+                    randValue = randGen.Next(1, 381);
+                    if (i > 2)
+                    {
+                        i = 0;
+                    }
+                    if (randValue % 20 == 0)
+                    {
+                        playerY = randValue;
+                        Rectangle square = new Rectangle(playerX, playerY, 20, 20);
+                        playerBody.Add(square);
+                    }
+                }
+            }
 
-            Rectangle square2 = new Rectangle(100, 200, 20, 20);
-            player2Body.Add(square2);
+            for (int i = 0; i < 10; i++)
+            {
+                randValue = randGen.Next(1, 581);
+                if (i > 2)
+                {
+                    i = 0;
+                }
+                if (randValue % 20 == 0)
+                {
+                    appleX = randValue;
+                    if (i > 2)
+                    {
+                        i = 0;
+                    }
+                    randValue = randGen.Next(1, 381);
+                    if (randValue % 20 == 0)
+                    {
+                        if (appleX == playerX && appleY == playerY)
+                        {
+                            appleX = 0;
+                            appleY = 0;
+                            i = 0;
+                        }
+                        appleY = randValue;
+                        Rectangle square2 = new Rectangle(100, 200, 20, 20);
+                        player2Body.Add(square2);
+                    }
+                }
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                randValue = randGen.Next(1, 581);
+                if (i > 2)
+                {
+                    i = 0;
+                }
+                if (randValue % 20 == 0)
+                {
+                    player2X = randValue;
+                    randValue = randGen.Next(1, 381);
+                    if (i > 2)
+                    {
+                        i = 0;
+                    }
+                    if (randValue % 20 == 0)
+                    {
+                        player2Y = randValue;
+                        if (player2X == playerX && playerX == playerY)
+                        {
+                            player2X = 0;
+                            player2Y = 0;
+                        }
+                        Rectangle square = new Rectangle(player2X, player2Y, 20, 20);
+                        playerBody.Add(square);
+                    }
+                }
+            }
 
             wDown = false;
             aDown = false;
@@ -206,7 +339,7 @@ namespace Snake
                     }
                     break;
                 case Keys.Escape:
-                    if (gameState == "start" || gameState == "wonPlayer1" || gameState == "lostPlayer1")
+                    if (gameState == "start" || gameState == "wonPlayer1" || gameState == "lostPlayer1" || gameState == "draw" || gameState == "player1Win" || gameState == "player2Win")
                     {
 
                     }
@@ -217,7 +350,7 @@ namespace Snake
                     Application.Exit();
                     break;
                 case Keys.Space:
-                    if (gameState == "start" || gameState == "wonPlayer1" || gameState == "lostPlayer1")
+                    if (gameState == "start" || gameState == "wonPlayer1" || gameState == "lostPlayer1" || gameState == "draw" || gameState == "player1Win" || gameState == "player2Win")
                     {
                         gameInitializer1Player();
                     }
@@ -227,7 +360,7 @@ namespace Snake
                     }
                     break;
                 case Keys.G:
-                    if (gameState == "start" || gameState == "wonPlayer1" || gameState == "lostPlayer1")
+                    if (gameState == "start" || gameState == "wonPlayer1" || gameState == "lostPlayer1" || gameState == "draw" || gameState == "player1Win" || gameState == "player2Win")
                     {
                         gameInitializer2Player();
                     }
@@ -395,7 +528,7 @@ namespace Snake
                 }
 
                 //checking if the player won
-                if (player1Score == 599)
+                if (player1Score == 600)
                 {
                     gameState = "won1Player";
                 }
@@ -528,19 +661,19 @@ namespace Snake
                 //checking if the player has collided with a wall
                 if (playerBody[0].Y < 0)
                 {
-                    gameState = "player1Lost";
+                    gameState = "player2Win";
                 }
                 else if (playerBody[0].X < 0)
                 {
-                    gameState = "player1Lost";
+                    gameState = "player2Win";
                 }
                 else if (playerBody[0].X > this.Width - playerHead.Width)
                 {
-                    gameState = "player1Lost";
+                    gameState = "player2Win";
                 }
                 else if (playerBody[0].Y > this.Height - playerHead.Height)
                 {
-                    gameState = "player1Lost";
+                    gameState = "player2Win";
                 }
 
                 //checking if the player colided with the body of the snake
@@ -548,19 +681,20 @@ namespace Snake
                 {
                     if (playerBody[0].IntersectsWith(playerBody[i]) && i > 1)
                     {
-                        gameState = "player1Lost";
+                        gameState = "player2Win";
                     }
                 }
                 for (int i = 0; i < player2Body.Count; i++)
                 {
-                    if (playerBody[0].IntersectsWith(player2Body[i]))
+                    if (playerBody[0].IntersectsWith(player2Body[i]) && i > 1)
                     {
-                        gameState = "player1Lost";
+                        gameState = "player2Win";
+                    }
+                    else if (playerBody[0].IntersectsWith(player2Body[0]))
+                    {
+                        gameState = "draw";
                     }
                 }
-
-                //checking if player 1 won
-
 
                 //player 2 code
                 //check if a player has collided with an apple and giving them a point
@@ -601,27 +735,27 @@ namespace Snake
                                         appleY = 0;
                                     }
                                 }
-                                player1Score++;
+                                player2Score++;
                                 apple = new Rectangle(appleX, appleY, 20, 20);
-                                if (lastDirection == 1)
+                                if (lastDirection2 == 1)
                                 {
                                     Rectangle playerTail = new Rectangle(0, 0, 20, 20);
                                     player2Body.Add(playerTail);
                                     i = 0;
                                 }
-                                else if (lastDirection == 2)
+                                else if (lastDirection2 == 2)
                                 {
                                     Rectangle playerTail = new Rectangle(0, 0, 20, 20);
                                     player2Body.Add(playerTail);
                                     i = 0;
                                 }
-                                else if (lastDirection == 3)
+                                else if (lastDirection2 == 3)
                                 {
                                     Rectangle playerTail = new Rectangle(0, 0, 20, 20);
                                     player2Body.Add(playerTail);
                                     i = 0;
                                 }
-                                else if (lastDirection == 4)
+                                else if (lastDirection2 == 4)
                                 {
                                     Rectangle playerTail = new Rectangle(0, 0, 20, 20);
                                     player2Body.Add(playerTail);
@@ -644,7 +778,7 @@ namespace Snake
                         player2Body.RemoveAt(player2Body.Count - 1);
                     }
 
-                    lastDirection = 1;
+                    lastDirection2 = 1;
                 }
                 if (leftDown == true && lastDirection2 != 4)
                 {
@@ -657,7 +791,7 @@ namespace Snake
                         player2Body.RemoveAt(player2Body.Count - 1);
                     }
 
-                    lastDirection = 2;
+                    lastDirection2 = 2;
                 }
                 if (downDown == true && lastDirection2 != 1)
                 {
@@ -670,7 +804,7 @@ namespace Snake
                         player2Body.RemoveAt(player2Body.Count - 1);
                     }
 
-                    lastDirection = 3;
+                    lastDirection2 = 3;
                 }
                 if (rightDown == true && lastDirection2 != 2)
                 {
@@ -682,25 +816,25 @@ namespace Snake
                     {
                         player2Body.RemoveAt(player2Body.Count - 1);
                     }
-                    lastDirection = 4;
+                    lastDirection2 = 4;
                 }
 
                 //checking if the player has collided with a wall
                 if (player2Body[0].Y < 0)
                 {
-                    gameState = "player2Lost";
+                    gameState = "player1Win";
                 }
                 else if (player2Body[0].X < 0)
                 {
-                    gameState = "player2Lost";
+                    gameState = "player1Win";
                 }
                 else if (player2Body[0].X > this.Width - playerHead.Width)
                 {
-                    gameState = "player2Lost";
+                    gameState = "player1Win";
                 }
                 else if (player2Body[0].Y > this.Height - playerHead.Height)
                 {
-                    gameState = "player2Lost";
+                    gameState = "player1Win";
                 }
 
                 //checking if the player colided with the body of the snake
@@ -708,21 +842,19 @@ namespace Snake
                 {
                     if (player2Body[0].IntersectsWith(playerBody[i]))
                     {
-                        gameState = "player2Lost";
+                        gameState = "player1Win";
                     }
                 }
                 for (int i = 0; i < player2Body.Count; i++)
                 {
                     if (player2Body[0].IntersectsWith(player2Body[i]) && i > 1)
                     {
-                        gameState = "player2Lost";
+                        gameState = "player1Win";
                     }
-                }
-
-                //checking if the player won
-                if (player2Score == 599)
-                {
-                    gameState = "won1Player";
+                    else if (player2Body[0].IntersectsWith(playerBody[0]))
+                    {
+                        gameState = "draw";
+                    }
                 }
             }
             Refresh();
@@ -734,7 +866,10 @@ namespace Snake
             //displaying different things on the screen depending on the game state
             if (gameState == "start")
             {
-
+                titleLabel.Text = "Snake";
+                subtitleLabel.Text = "Press space to play single player, press G to play 2 player or press escape to exit";
+                scoreLabel.Text = "";
+                scoreLabel2.Text = "";
             }
             else if (gameState == "1Player")
             {
@@ -794,20 +929,37 @@ namespace Snake
             else if (gameState == "won1Player")
             {
                 titleLabel.Text = "Snake";
-                subtitleLabel.Text = "You won! \nPress space to play or press escape to exit";
+                subtitleLabel.Text = "You won!\nPress space to play single player, press G to play 2 player or press escape to exit";
+                scoreLabel.Text = "";
+                scoreLabel2.Text = "";
             }
             else if (gameState == "lost1Player")
             {
                 titleLabel.Text = "Snake";
-                subtitleLabel.Text = $"You lost! You got a score of {player1Score} \nPress space to play or press escape to exit";
+                subtitleLabel.Text = $"You lost! You got a score of {player1Score}\nPress space to play single player, press G to play 2 player or press escape to exit";
+                scoreLabel.Text = "";
+                scoreLabel2.Text = "";
             }
             else if (gameState == "player1Win")
             {
-
+                titleLabel.Text = "Snake";
+                subtitleLabel.Text = $"Player 1 wins with a score of {player1Score}\nPress space to play single player, press G to play 2 player or press escape to exit";
+                scoreLabel.Text = "";
+                scoreLabel2.Text = "";
             }
             else if (gameState == "player2Win")
             {
-
+                titleLabel.Text = "Snake";
+                subtitleLabel.Text = $"Player 2 wins with a score of {player2Score}\nPress space to play single player, press G to play 2 player or press escape to exit";
+                scoreLabel.Text = "";
+                scoreLabel2.Text = "";
+            }
+            else if (gameState == "draw")
+            {
+                titleLabel.Text = "Snake";
+                subtitleLabel.Text = $"Game was a draw :/\nPress space to play single player, press G to play 2 player or press escape to exit";
+                scoreLabel.Text = "";
+                scoreLabel2.Text = "";
             }
         }
     }

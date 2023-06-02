@@ -57,7 +57,7 @@
             // 
             this.subtitleLabel.BackColor = System.Drawing.Color.Transparent;
             this.subtitleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.subtitleLabel.ForeColor = System.Drawing.Color.White;
+            this.subtitleLabel.ForeColor = System.Drawing.Color.Transparent;
             this.subtitleLabel.Location = new System.Drawing.Point(19, 203);
             this.subtitleLabel.Name = "subtitleLabel";
             this.subtitleLabel.Size = new System.Drawing.Size(569, 93);
