@@ -11,7 +11,7 @@ using System.Media;
 
 namespace Snake
 {
-    public partial class Form1 : Form
+    public partial class mainScreen : Form
     {
         //creating lists
         List<Rectangle> playerBody = new List<Rectangle>();
@@ -52,7 +52,7 @@ namespace Snake
         SolidBrush limeGreenBrush = new SolidBrush(Color.LimeGreen);
         SolidBrush redBrush = new SolidBrush(Color.Red);
 
-        public Form1()
+        public mainScreen()
         {
             InitializeComponent();
         }
@@ -236,6 +236,31 @@ namespace Snake
             gameTimer.Enabled = true;
         }
 
+        public void hardMode()
+        {
+            //// Create an instance of the large screen 
+            //LargeScreen ls = new LargeScreen();
+
+            //// Centre the screen on the Form
+            //ls.Location = new Point((this.ClientSize.Width - ls.Width) / 2,
+            //    (this.ClientSize.Height - ls.Height) / 2);
+
+            //// Add UC to form and give focus 
+            //this.Controls.Add(ls);
+            //ls.Focus(); 
+            
+            mainScreen f = (mainScreen)this.FindForm();
+            f.Controls.Remove(this);
+
+            LargeScreen gs = new LargeScreen();
+
+            gs.Location = new Point((f.ClientSize.Width - gs.Width) / 2,
+                (f.ClientSize.Height - gs.Height) / 2);
+
+            gs.Focus();
+            f.Controls.Add(gs);
+        }
+
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -384,6 +409,9 @@ namespace Snake
                     {
                         gameTimer.Enabled = true;
                     }
+                    break;
+                case Keys.L:
+                    hardMode();
                     break;
             }
         }
