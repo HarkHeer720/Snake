@@ -52,10 +52,28 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="LargeScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LargeScreen.Designer.cs">
+      <DependentUpon>LargeScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MediumScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MediumScreen.Designer.cs">
+      <DependentUpon>MediumScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LargeScreen.resx">
+      <DependentUpon>LargeScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MediumScreen.resx">
+      <DependentUpon>MediumScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -86,6 +104,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\checkerBoard2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="leaderboard.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

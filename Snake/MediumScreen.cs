@@ -7,18 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Media;
-using System.IO;
 
 namespace Snake
 {
-    public partial class mainScreen : Form
+    public partial class MediumScreen : UserControl
     {
         //creating lists
         List<Rectangle> playerBody = new List<Rectangle>();
         List<Rectangle> player2Body = new List<Rectangle>();
-        List<String> playerNames = new List<string>();
-        List<String> playerScores = new List<string>();
 
         //creating rectangles
         Rectangle playerHead = new Rectangle(40, 40, 20, 20);
@@ -39,7 +35,6 @@ namespace Snake
         int playerY;
         int player2X;
         int player2Y;
-        string baller;
 
         //creating key presses
         bool wDown = false;
@@ -57,7 +52,7 @@ namespace Snake
         SolidBrush limeGreenBrush = new SolidBrush(Color.LimeGreen);
         SolidBrush redBrush = new SolidBrush(Color.Red);
 
-        public mainScreen()
+        public MediumScreen()
         {
             InitializeComponent();
         }
@@ -418,16 +413,6 @@ namespace Snake
                     hardMode();
                     break;
             }
-        }
-
-        private IEnumerable<string> GetPlayerNames()
-        {
-            return playerNames;
-        }
-
-        private void leaderboardButton_Click(object sender, EventArgs e)
-        {
-            playerNames = File.WriteAllLines("leaderboard.txt", playerNames);
         }
 
         private void gameTimer_Tick(object sender, EventArgs e)
@@ -943,7 +928,7 @@ namespace Snake
                 scoreLabel.Text = $"{player1Score}";
                 scoreLabel2.Text = "";
 
-                e.Graphics.DrawRectangle(purplePen, 0, 0, 599, 399);
+                e.Graphics.DrawRectangle(purplePen, 0, 0, 600, 400);
                 e.Graphics.FillRectangle(redBrush, apple);
                 for (int i = 0; i < playerBody.Count; i++)
                 {
@@ -964,7 +949,7 @@ namespace Snake
                 scoreLabel.Text = $"{player1Score}";
                 scoreLabel2.Text = $"{player2Score}";
 
-                e.Graphics.DrawRectangle(purplePen, 0, 0, 599, 399);
+                e.Graphics.DrawRectangle(purplePen, 0, 0, 600, 400);
                 e.Graphics.FillRectangle(redBrush, apple);
 
                 // draw player 1
@@ -999,9 +984,6 @@ namespace Snake
                 subtitleLabel.Text = "You won!\nPress space to play single player, press G to play 2 player or press escape to exit";
                 scoreLabel.Text = "";
                 scoreLabel2.Text = "";
-
-                leaderboardButton.Visible = true;
-                usernameInput.Visible = true;
             }
             else if (gameState == "lost1Player")
             {
@@ -1009,9 +991,6 @@ namespace Snake
                 subtitleLabel.Text = $"You lost! You got a score of {player1Score}\nPress space to play single player, press G to play 2 player or press escape to exit";
                 scoreLabel.Text = "";
                 scoreLabel2.Text = "";
-
-                leaderboardButton.Visible = true;
-                usernameInput.Visible = true;
             }
             else if (gameState == "player1Win")
             {
