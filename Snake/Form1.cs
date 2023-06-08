@@ -414,20 +414,7 @@ namespace Snake
                         gameTimer.Enabled = true;
                     }
                     break;
-                case Keys.L:
-                    hardMode();
-                    break;
             }
-        }
-
-        private IEnumerable<string> GetPlayerNames()
-        {
-            return playerNames;
-        }
-
-        private void leaderboardButton_Click(object sender, EventArgs e)
-        {
-            playerNames = File.WriteAllLines("leaderboard.txt", playerNames);
         }
 
         private void gameTimer_Tick(object sender, EventArgs e)
