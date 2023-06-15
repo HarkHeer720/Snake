@@ -36,6 +36,8 @@
             this.scoreLabel2 = new System.Windows.Forms.Label();
             this.usernameInput = new System.Windows.Forms.TextBox();
             this.leaderboardButton = new System.Windows.Forms.Button();
+            this.leaderboardLabel = new System.Windows.Forms.Label();
+            this.displayLeaderboardButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // gameTimer
@@ -108,18 +110,43 @@
             this.leaderboardButton.Visible = false;
             this.leaderboardButton.Click += new System.EventHandler(this.leaderboardButton_Click);
             // 
+            // leaderboardLabel
+            // 
+            this.leaderboardLabel.BackColor = System.Drawing.Color.Transparent;
+            this.leaderboardLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.leaderboardLabel.ForeColor = System.Drawing.Color.White;
+            this.leaderboardLabel.Location = new System.Drawing.Point(12, 9);
+            this.leaderboardLabel.Name = "leaderboardLabel";
+            this.leaderboardLabel.Size = new System.Drawing.Size(576, 382);
+            this.leaderboardLabel.TabIndex = 7;
+            this.leaderboardLabel.Visible = false;
+            // 
+            // displayLeaderboardButton
+            // 
+            this.displayLeaderboardButton.Location = new System.Drawing.Point(69, 351);
+            this.displayLeaderboardButton.Name = "displayLeaderboardButton";
+            this.displayLeaderboardButton.Size = new System.Drawing.Size(468, 23);
+            this.displayLeaderboardButton.TabIndex = 8;
+            this.displayLeaderboardButton.Text = "Display leaderboard";
+            this.displayLeaderboardButton.UseMnemonic = false;
+            this.displayLeaderboardButton.UseVisualStyleBackColor = true;
+            this.displayLeaderboardButton.Visible = false;
+            this.displayLeaderboardButton.Click += new System.EventHandler(this.displayLeaderboard_Click);
+            // 
             // mainScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(600, 400);
+            this.Controls.Add(this.displayLeaderboardButton);
             this.Controls.Add(this.leaderboardButton);
             this.Controls.Add(this.usernameInput);
             this.Controls.Add(this.scoreLabel2);
             this.Controls.Add(this.scoreLabel);
             this.Controls.Add(this.subtitleLabel);
             this.Controls.Add(this.titleLabel);
+            this.Controls.Add(this.leaderboardLabel);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "mainScreen";
@@ -141,6 +168,8 @@
         private System.Windows.Forms.Label scoreLabel2;
         private System.Windows.Forms.TextBox usernameInput;
         private System.Windows.Forms.Button leaderboardButton;
+        private System.Windows.Forms.Label leaderboardLabel;
+        private System.Windows.Forms.Button displayLeaderboardButton;
     }
 }
 

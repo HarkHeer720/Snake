@@ -39,7 +39,6 @@ namespace Snake
         int playerY;
         int player2X;
         int player2Y;
-        string baller;
 
         //creating key presses
         bool wDown = false;
@@ -112,6 +111,22 @@ namespace Snake
                         apple = new Rectangle(appleX, appleY, 20, 20);
                         i = 10000;
                     }
+                }
+            }
+
+            List<string> tempList = new List<string>();
+
+            tempList = File.ReadAllLines("leaderboard.txt").ToList();
+
+            for (int i = 0; i < tempList.Count; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    playerNames.Add(tempList[i]);
+                }
+                else if (i % 2 != 0)
+                {
+                    playerScores.Add(tempList[i]);
                 }
             }
 
@@ -238,31 +253,6 @@ namespace Snake
 
             gameState = "2Player";
             gameTimer.Enabled = true;
-        }
-
-        public void hardMode()
-        {
-            //// Create an instance of the large screen 
-            //LargeScreen ls = new LargeScreen();
-
-            //// Centre the screen on the Form
-            //ls.Location = new Point((this.ClientSize.Width - ls.Width) / 2,
-            //    (this.ClientSize.Height - ls.Height) / 2);
-
-            //// Add UC to form and give focus 
-            //this.Controls.Add(ls);
-            //ls.Focus(); 
-
-            mainScreen f = (mainScreen)this.FindForm();
-            f.Controls.Remove(this);
-
-            MediumScreen gs = new MediumScreen();
-
-            gs.Location = new Point((f.ClientSize.Width - gs.Width) / 2,
-                (f.ClientSize.Height - gs.Height) / 2);
-
-            gs.Focus();
-            f.Controls.Add(gs);
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -417,6 +407,59 @@ namespace Snake
             }
         }
 
+        private void leaderboardButton_Click(object sender, EventArgs e)
+        {
+            if (usernameInput.Text == "")
+            {
+                usernameInput.Text = "Please put a valid input";
+            }
+            else
+            {
+                playerNames.Add(usernameInput.Text);
+                playerScores.Add(Convert.ToString(player1Score));
+
+                List<string> tempList = new List<string>();
+
+                for (int i = 0; i < playerNames.Count; i++)
+                {
+                    tempList.Add(playerNames[i]);
+                    tempList.Add(playerScores[i]);
+                }
+
+                File.WriteAllLines("leaderboard.txt", tempList);
+
+                usernameInput.Clear();
+                gameState = "beforeLeaderboard";
+            }
+        }
+        private void displayLeaderboard_Click(object sender, EventArgs e)
+        {
+            gameState = "leaderboard";
+
+            for (int i = 0; i < playerNames.Count;i++)
+            {
+                int baller = Convert.ToInt32(playerScores[i]);
+                for (int j = 0; j < playerNames.Count; j++)
+                {
+                    if (baller > Convert.ToInt32(playerScores[i]))
+                    {
+                        playerScores.Insert(0, Convert.ToString(baller));
+                        playerNames.Insert(0, playerNames[j]);
+                    }
+                }
+            }
+            leaderboardLabel.Text += $"1. {playerNames[0]}  {playerScores[0]}";
+            leaderboardLabel.Text += $"\n2. {playerNames[1]}  {playerScores[1]}";
+            leaderboardLabel.Text += $"\n3. {playerNames[2]}  {playerScores[2]}";
+            leaderboardLabel.Text += $"\n4. {playerNames[3]}  {playerScores[3]}";
+            leaderboardLabel.Text += $"\n5. {playerNames[4]}  {playerScores[4]}";
+            leaderboardLabel.Text += $"\n6. {playerNames[5]}  {playerScores[5]}";
+            leaderboardLabel.Text += $"\n7. {playerNames[6]}  {playerScores[6]}";
+            leaderboardLabel.Text += $"\n8. {playerNames[7]}  {playerScores[7]}";
+            leaderboardLabel.Text += $"\n9. {playerNames[8]}  {playerScores[8]}";
+            leaderboardLabel.Text += $"\n10. {playerNames[9]}  {playerScores[9]}";
+        }
+
         private void gameTimer_Tick(object sender, EventArgs e)
         {
             if (gameState == "1Player")
@@ -539,18 +582,22 @@ namespace Snake
                 if (playerBody[0].Y < 0)
                 {
                     gameState = "lost1Player";
+                    gameTimer.Enabled = false;
                 }
                 else if (playerBody[0].X < 0)
                 {
                     gameState = "lost1Player";
+                    gameTimer.Enabled = false;
                 }
                 else if (playerBody[0].X > this.Width - playerHead.Width)
                 {
                     gameState = "lost1Player";
+                    gameTimer.Enabled = false;
                 }
                 else if (playerBody[0].Y > this.Height - playerHead.Height)
                 {
                     gameState = "lost1Player";
+                    gameTimer.Enabled = false;
                 }
 
                 //checking if the player colided with the body of the snake
@@ -559,6 +606,7 @@ namespace Snake
                     if (playerBody[0].IntersectsWith(playerBody[i]) && i > 1)
                     {
                         gameState = "lost1Player";
+                        gameTimer.Enabled = false;
                     }
                 }
 
@@ -566,6 +614,7 @@ namespace Snake
                 if (player1Score == 600)
                 {
                     gameState = "won1Player";
+                    gameTimer.Enabled = false;
                 }
             }
 
@@ -697,18 +746,22 @@ namespace Snake
                 if (playerBody[0].Y < 0)
                 {
                     gameState = "player2Win";
+                    gameTimer.Enabled = false;
                 }
                 else if (playerBody[0].X < 0)
                 {
                     gameState = "player2Win";
+                    gameTimer.Enabled = false;
                 }
                 else if (playerBody[0].X > this.Width - playerHead.Width)
                 {
                     gameState = "player2Win";
+                    gameTimer.Enabled = false;
                 }
                 else if (playerBody[0].Y > this.Height - playerHead.Height)
                 {
                     gameState = "player2Win";
+                    gameTimer.Enabled = false;
                 }
 
                 //checking if the player colided with the body of the snake
@@ -717,6 +770,7 @@ namespace Snake
                     if (playerBody[0].IntersectsWith(playerBody[i]) && i > 1)
                     {
                         gameState = "player2Win";
+                        gameTimer.Enabled = false;
                     }
                 }
                 for (int i = 0; i < player2Body.Count; i++)
@@ -724,20 +778,24 @@ namespace Snake
                     if (playerBody[0].IntersectsWith(player2Body[i]) && i > 1)
                     {
                         gameState = "player2Win";
+                        gameTimer.Enabled = false;
                     }
                     else if (playerBody[0].IntersectsWith(player2Body[0]))
                     {
                         if (player1Score > player2Score)
                         {
                             gameState = "player1Win";
+                            gameTimer.Enabled = false;
                         }
                         else if (player2Score > player1Score)
                         {
                             gameState = "player2Win";
+                            gameTimer.Enabled = false;
                         }
                         else
                         {
                             gameState = "draw";
+                            gameTimer.Enabled = false;
                         }
                     }
                 }
@@ -871,18 +929,22 @@ namespace Snake
                 if (player2Body[0].Y < 0)
                 {
                     gameState = "player1Win";
+                    gameTimer.Enabled = false;
                 }
                 else if (player2Body[0].X < 0)
                 {
                     gameState = "player1Win";
+                    gameTimer.Enabled = false;
                 }
                 else if (player2Body[0].X > this.Width - playerHead.Width)
                 {
                     gameState = "player1Win";
+                    gameTimer.Enabled = false;
                 }
                 else if (player2Body[0].Y > this.Height - playerHead.Height)
                 {
                     gameState = "player1Win";
+                    gameTimer.Enabled = false;
                 }
 
                 //checking if the player colided with the body of the snake
@@ -891,20 +953,24 @@ namespace Snake
                     if (player2Body[0].IntersectsWith(player2Body[i]) && i > 1)
                     {
                         gameState = "player1Win";
+                        gameTimer.Enabled = false;
                     }
                     else if (player2Body[0].IntersectsWith(playerBody[0]))
                     {
                         if (player1Score > player2Score)
                         {
                             gameState = "player1Win";
+                            gameTimer.Enabled = false;
                         }
                         else if (player2Score > player1Score)
                         {
                             gameState = "player2Win";
+                            gameTimer.Enabled = false;
                         }
                         else
                         {
                             gameState = "draw";
+                            gameTimer.Enabled = false;
                         }
                     }
                 }
@@ -943,6 +1009,9 @@ namespace Snake
                         e.Graphics.FillRectangle(limeGreenBrush, playerBody[i]);
                     }
                 }
+
+                leaderboardButton.Visible = false;
+                usernameInput.Visible = false;
             }
             else if (gameState == "2Player")
             {
@@ -979,6 +1048,9 @@ namespace Snake
                         e.Graphics.FillRectangle(limeGreenBrush, player2Body[i]);
                     }
                 }
+
+                leaderboardButton.Visible = false;
+                usernameInput.Visible = false;
             }
             else if (gameState == "won1Player")
             {
@@ -1020,6 +1092,27 @@ namespace Snake
                 subtitleLabel.Text = $"Game was a draw :/\nPress space to play single player, press G to play 2 player or press escape to exit";
                 scoreLabel.Text = "";
                 scoreLabel2.Text = "";
+            }
+            else if (gameState == "beforeLeaderboard")
+            {
+                titleLabel.Visible = true;
+                subtitleLabel.Visible = true;
+                scoreLabel.Visible = false;
+                scoreLabel2.Visible = false;
+                leaderboardLabel.Visible = false;
+                leaderboardButton.Visible = false;
+                displayLeaderboardButton.Visible = true;
+            }
+            else if (gameState == "leaderboard")
+            {
+                usernameInput.Visible = false;
+                titleLabel.Visible = false;
+                subtitleLabel.Visible = false;
+                scoreLabel.Visible = false;
+                scoreLabel2.Visible = false;
+                leaderboardButton.Visible = false;
+                displayLeaderboardButton.Visible = false;
+                leaderboardLabel.Visible = true;
             }
         }
     }
