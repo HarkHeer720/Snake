@@ -415,6 +415,8 @@ namespace Snake
             }
             else
             {
+                gameState = "beforeLeaderboard";
+
                 playerNames.Add(usernameInput.Text);
                 playerScores.Add(Convert.ToString(player1Score));
 
@@ -429,35 +431,68 @@ namespace Snake
                 File.WriteAllLines("leaderboard.txt", tempList);
 
                 usernameInput.Clear();
-                gameState = "beforeLeaderboard";
             }
         }
         private void displayLeaderboard_Click(object sender, EventArgs e)
         {
             gameState = "leaderboard";
 
-            for (int i = 0; i < playerNames.Count;i++)
+            for (int i = 0; i < playerScores.Count;i++)
             {
                 int baller = Convert.ToInt32(playerScores[i]);
-                for (int j = 0; j < playerNames.Count; j++)
+                for (int j = 0; j < playerScores.Count; j++)
                 {
-                    if (baller > Convert.ToInt32(playerScores[i]))
+                    if (baller > Convert.ToInt32(playerScores[j]))
                     {
                         playerScores.Insert(0, Convert.ToString(baller));
-                        playerNames.Insert(0, playerNames[j]);
+                        playerNames.Insert(0, playerNames[i]);
                     }
                 }
             }
-            leaderboardLabel.Text += $"1. {playerNames[0]}  {playerScores[0]}";
-            leaderboardLabel.Text += $"\n2. {playerNames[1]}  {playerScores[1]}";
-            leaderboardLabel.Text += $"\n3. {playerNames[2]}  {playerScores[2]}";
-            leaderboardLabel.Text += $"\n4. {playerNames[3]}  {playerScores[3]}";
-            leaderboardLabel.Text += $"\n5. {playerNames[4]}  {playerScores[4]}";
-            leaderboardLabel.Text += $"\n6. {playerNames[5]}  {playerScores[5]}";
-            leaderboardLabel.Text += $"\n7. {playerNames[6]}  {playerScores[6]}";
-            leaderboardLabel.Text += $"\n8. {playerNames[7]}  {playerScores[7]}";
-            leaderboardLabel.Text += $"\n9. {playerNames[8]}  {playerScores[8]}";
-            leaderboardLabel.Text += $"\n10. {playerNames[9]}  {playerScores[9]}";
+             
+            for (int i = 0; i < playerNames.Count;i++)
+            {
+                if (i == 0)
+                {
+                    leaderboardLabel.Text += $"1. {playerNames[0]}  {playerScores[0]}";
+                }
+                if (i == 1)
+                {
+                    leaderboardLabel.Text += $"\n2. {playerNames[1]}  {playerScores[1]}";
+                }
+                if (i == 2)
+                {
+                    leaderboardLabel.Text += $"\n3. {playerNames[2]}  {playerScores[2]}";
+                }
+                if (i == 3)
+                {
+                    leaderboardLabel.Text += $"\n4. {playerNames[3]}  {playerScores[3]}";
+                }
+                if (i == 4)
+                {
+                    leaderboardLabel.Text += $"\n5. {playerNames[4]}  {playerScores[4]}";
+                }
+                if (i == 5)
+                {
+                    leaderboardLabel.Text += $"\n6. {playerNames[5]}  {playerScores[5]}";
+                }
+                if (i == 6)
+                {
+                    leaderboardLabel.Text += $"\n7. {playerNames[6]}  {playerScores[6]}";
+                }
+                if (i == 7)
+                {
+                    leaderboardLabel.Text += $"\n8. {playerNames[7]}  {playerScores[7]}";
+                }
+                if (i == 8)
+                {
+                    leaderboardLabel.Text += $"\n9. {playerNames[8]}  {playerScores[8]}";
+                }
+                if (i == 9)
+                {
+                    leaderboardLabel.Text += $"\n10. {playerNames[9]}  {playerScores[9]}";
+                }
+            }
         }
 
         private void gameTimer_Tick(object sender, EventArgs e)
