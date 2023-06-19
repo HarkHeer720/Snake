@@ -39,6 +39,8 @@ namespace Snake
         int playerY;
         int player2X;
         int player2Y;
+        int frameCounter = 0;
+        int frameCounter2 = 0;
 
         //creating key presses
         bool wDown = false;
@@ -60,6 +62,7 @@ namespace Snake
         {
             InitializeComponent();
         }
+
         public void gameInitializer1Player()
         {
             playerBody.Clear();
@@ -260,11 +263,7 @@ namespace Snake
             switch (e.KeyCode)
             {
                 case Keys.W:
-                    if (lastDirection == 3)
-                    {
-
-                    }
-                    else
+                    if (lastDirection != 3)
                     {
                         wDown = true;
                         aDown = false;
@@ -273,11 +272,7 @@ namespace Snake
                     }
                     break;
                 case Keys.A:
-                    if (lastDirection == 4)
-                    {
-
-                    }
-                    else
+                    if (lastDirection != 4)
                     {
                         wDown = false;
                         aDown = true;
@@ -286,11 +281,7 @@ namespace Snake
                     }
                     break;
                 case Keys.S:
-                    if (lastDirection == 1)
-                    {
-
-                    }
-                    else
+                    if (lastDirection != 1)
                     {
                         wDown = false;
                         aDown = false;
@@ -299,11 +290,7 @@ namespace Snake
                     }
                     break;
                 case Keys.D:
-                    if (lastDirection == 2)
-                    {
-
-                    }
-                    else
+                    if (lastDirection != 2)
                     {
                         wDown = false;
                         aDown = false;
@@ -312,11 +299,7 @@ namespace Snake
                     }
                     break;
                 case Keys.Up:
-                    if (lastDirection2 == 3)
-                    {
-
-                    }
-                    else
+                    if (lastDirection2 != 3)
                     {
                         upDown = true;
                         leftDown = false;
@@ -325,11 +308,7 @@ namespace Snake
                     }
                     break;
                 case Keys.Left:
-                    if (lastDirection2 == 4)
-                    {
-
-                    }
-                    else
+                    if (lastDirection2 != 4)
                     {
                         upDown = false;
                         leftDown = true;
@@ -338,11 +317,7 @@ namespace Snake
                     }
                     break;
                 case Keys.Down:
-                    if (lastDirection2 == 1)
-                    {
-
-                    }
-                    else
+                    if (lastDirection2 != 1)
                     {
                         upDown = false;
                         leftDown = false;
@@ -351,11 +326,7 @@ namespace Snake
                     }
                     break;
                 case Keys.Right:
-                    if (lastDirection2 == 2)
-                    {
-
-                    }
-                    else
+                    if (lastDirection2 != 2)
                     {
                         upDown = false;
                         leftDown = false;
@@ -433,64 +404,108 @@ namespace Snake
                 usernameInput.Clear();
             }
         }
+
         private void displayLeaderboard_Click(object sender, EventArgs e)
         {
             gameState = "leaderboard";
+            List<string> tempList = new List<string>();
 
-            for (int i = 0; i < playerScores.Count;i++)
+            for (int i = 0; i < playerScores.Count; i++)
             {
                 int baller = Convert.ToInt32(playerScores[i]);
                 for (int j = 0; j < playerScores.Count; j++)
                 {
-                    if (baller > Convert.ToInt32(playerScores[j]))
+                    if (baller < Convert.ToInt32(playerScores[j]))
                     {
-                        playerScores.Insert(0, Convert.ToString(baller));
-                        playerNames.Insert(0, playerNames[i]);
+                        tempList.Insert(0, playerScores[j]);
+                        tempList.Insert(0, playerNames[j]);
+                        playerNames.RemoveAt(j);
+                        playerScores.RemoveAt(j);
                     }
                 }
             }
-             
-            for (int i = 0; i < playerNames.Count;i++)
+
+            for (int i = 0; i < tempList.Count;i++)
             {
                 if (i == 0)
                 {
-                    leaderboardLabel.Text += $"1. {playerNames[0]}  {playerScores[0]}";
+                    leaderboardLabel.Text += $"1. {tempList[i]}";
                 }
-                if (i == 1)
+                else if (i == 1)
                 {
-                    leaderboardLabel.Text += $"\n2. {playerNames[1]}  {playerScores[1]}";
+                    leaderboardLabel.Text += $"  {tempList[i]}";
                 }
-                if (i == 2)
+                else if (i == 2)
                 {
-                    leaderboardLabel.Text += $"\n3. {playerNames[2]}  {playerScores[2]}";
+                    leaderboardLabel.Text += $"\n2. {tempList[i]}";
                 }
-                if (i == 3)
+                else if (i == 3)
                 {
-                    leaderboardLabel.Text += $"\n4. {playerNames[3]}  {playerScores[3]}";
+                    leaderboardLabel.Text += $"  {tempList[i]}";
                 }
-                if (i == 4)
+                else if (i == 4)
                 {
-                    leaderboardLabel.Text += $"\n5. {playerNames[4]}  {playerScores[4]}";
+                    leaderboardLabel.Text += $"\n3. {tempList[i]}";
                 }
-                if (i == 5)
+                else if (i == 5)
                 {
-                    leaderboardLabel.Text += $"\n6. {playerNames[5]}  {playerScores[5]}";
+                    leaderboardLabel.Text += $"  {tempList[i]}";
                 }
-                if (i == 6)
+                else if (i == 6)
                 {
-                    leaderboardLabel.Text += $"\n7. {playerNames[6]}  {playerScores[6]}";
+                    leaderboardLabel.Text += $"\n4. {tempList[i]}";
                 }
-                if (i == 7)
+                else if (i == 7)
                 {
-                    leaderboardLabel.Text += $"\n8. {playerNames[7]}  {playerScores[7]}";
+                    leaderboardLabel.Text += $"  {tempList[i]}";
                 }
-                if (i == 8)
+                else if (i == 8)
                 {
-                    leaderboardLabel.Text += $"\n9. {playerNames[8]}  {playerScores[8]}";
+                    leaderboardLabel.Text += $"\n5. {tempList[i]}";
                 }
-                if (i == 9)
+                else if (i == 9)
                 {
-                    leaderboardLabel.Text += $"\n10. {playerNames[9]}  {playerScores[9]}";
+                    leaderboardLabel.Text += $"  {tempList[i]}";
+                }
+                else if (i == 10)
+                {
+                    leaderboardLabel.Text += $"\n6. {tempList[i]}";
+                }
+                else if (i == 11)
+                {
+                    leaderboardLabel.Text += $"  {tempList[i]}";
+                }
+                else if (i == 12)
+                {
+                    leaderboardLabel.Text += $"\n7. {tempList[i]}";
+                }
+                else if (i == 13)
+                {
+                    leaderboardLabel.Text += $"  {tempList[i]}";
+                }
+                else if (i == 14)
+                {
+                    leaderboardLabel.Text += $"\n8. {tempList[i]}";
+                }
+                else if (i == 15)
+                {
+                    leaderboardLabel.Text += $"  {tempList[i]}";
+                }
+                else if (i == 16)
+                {
+                    leaderboardLabel.Text += $"\n9. {tempList[i]}";
+                }
+                else if (i == 17)
+                {
+                    leaderboardLabel.Text += $"  {tempList[i]}";
+                }
+                else if (i == 18)
+                {
+                    leaderboardLabel.Text += $"\n10. {tempList[i]}";
+                }
+                else if (i == 19)
+                {
+                    leaderboardLabel.Text += $"  {tempList[i]}";
                 }
             }
         }
@@ -499,341 +514,13 @@ namespace Snake
         {
             if (gameState == "1Player")
             {
-                //check if a player has collided with an apple and giving them a point
-                for (int i = 0; i < 20; i++)
-                {
-                    if (playerBody[0].IntersectsWith(apple))
-                    {
-                        if (i > 1)
-                        {
-                            i = 0;
-                        }
-                        randValue = randGen.Next(1, 581);
-                        if (randValue % 20 == 0)
-                        {
-                            if (i > 1)
-                            {
-                                i = 0;
-                            }
-                            appleX = randValue;
-                            randValue = randGen.Next(1, 381);
-                            if (randValue % 20 == 0)
-                            {
-                                appleY = randValue;
-                                for (int j = 0; j < playerBody.Count; j++)
-                                {
-                                    if (appleX == playerBody[j].X && appleY == playerBody[j].Y)
-                                    {
-                                        appleX = 0;
-                                        appleY = 0;
-                                        i = 0;
-                                    }
-                                }
-                                apple = new Rectangle(appleX, appleY, 20, 20);
-                                player1Score++;
-                                if (lastDirection == 1)
-                                {
-                                    Rectangle playerTail = new Rectangle(0, 0, 20, 20);
-                                    playerBody.Add(playerTail);
-                                    i = 0;
-                                }
-                                else if (lastDirection == 2)
-                                {
-                                    Rectangle playerTail = new Rectangle(0, 0, 20, 20);
-                                    playerBody.Add(playerTail);
-                                    i = 0;
-                                }
-                                else if (lastDirection == 3)
-                                {
-                                    Rectangle playerTail = new Rectangle(0, 0, 20, 20);
-                                    playerBody.Add(playerTail);
-                                    i = 0;
-                                }
-                                else if (lastDirection == 4)
-                                {
-                                    Rectangle playerTail = new Rectangle(0, 0, 20, 20);
-                                    playerBody.Add(playerTail);
-                                    i = 0;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                //move the player if they change their direction of movement
-                if (wDown == true && lastDirection != 3)
-                {
-                    //create new body part for head at 0
-                    int Y = playerBody[0].Y - playerSpeed;
-                    Rectangle player = new Rectangle(playerBody[0].X, Y, 20, 20);
-                    playerBody.Insert(0, player);
-                    if (playerBody.Count > 1)
-                    {
-                        playerBody.RemoveAt(playerBody.Count - 1);
-                    }
-
-                    lastDirection = 1;
-                }
-                if (aDown == true && lastDirection != 4)
-                {
-                    //create new body part for head at 0
-                    int X = playerBody[0].X - playerSpeed;
-                    Rectangle player = new Rectangle(X, playerBody[0].Y, 20, 20);
-                    playerBody.Insert(0, player);
-                    if (playerBody.Count > 1)
-                    {
-                        playerBody.RemoveAt(playerBody.Count - 1);
-                    }
-
-                    lastDirection = 2;
-                }
-                if (sDown == true && lastDirection != 1)
-                {
-                    //create new body part for head at 0
-                    int Y = playerBody[0].Y + playerSpeed;
-                    Rectangle player = new Rectangle(playerBody[0].X, Y, 20, 20);
-                    playerBody.Insert(0, player);
-                    if (playerBody.Count > 1)
-                    {
-                        playerBody.RemoveAt(playerBody.Count - 1);
-                    }
-
-                    lastDirection = 3;
-                }
-                if (dDown == true && lastDirection != 2)
-                {
-                    //create new body part for head at 0
-                    int X = playerBody[0].X + playerSpeed;
-                    Rectangle player = new Rectangle(X, playerBody[0].Y, 20, 20);
-                    playerBody.Insert(0, player);
-                    if (playerBody.Count > 1)
-                    {
-                        playerBody.RemoveAt(playerBody.Count - 1);
-                    }
-                    lastDirection = 4;
-                }
-
-                //checking if the player has collided with a wall
-                if (playerBody[0].Y < 0)
-                {
-                    gameState = "lost1Player";
-                    gameTimer.Enabled = false;
-                }
-                else if (playerBody[0].X < 0)
-                {
-                    gameState = "lost1Player";
-                    gameTimer.Enabled = false;
-                }
-                else if (playerBody[0].X > this.Width - playerHead.Width)
-                {
-                    gameState = "lost1Player";
-                    gameTimer.Enabled = false;
-                }
-                else if (playerBody[0].Y > this.Height - playerHead.Height)
-                {
-                    gameState = "lost1Player";
-                    gameTimer.Enabled = false;
-                }
-
-                //checking if the player colided with the body of the snake
-                for (int i = 0; i < playerBody.Count; i++)
-                {
-                    if (playerBody[0].IntersectsWith(playerBody[i]) && i > 1)
-                    {
-                        gameState = "lost1Player";
-                        gameTimer.Enabled = false;
-                    }
-                }
-
-                //checking if the player won
-                if (player1Score == 600)
-                {
-                    gameState = "won1Player";
-                    gameTimer.Enabled = false;
-                }
+                player1();
             }
 
             else if (gameState == "2Player")
             {
                 // player 1 code
-                //check if a player has collided with an apple and giving them a point
-                for (int i = 0; i < 20; i++)
-                {
-                    if (playerBody[0].IntersectsWith(apple))
-                    {
-                        if (i > 1)
-                        {
-                            i = 0;
-                        }
-                        randValue = randGen.Next(1, 581);
-                        if (randValue % 20 == 0)
-                        {
-                            if (i > 1)
-                            {
-                                i = 0;
-                            }
-                            appleX = randValue;
-                            randValue = randGen.Next(1, 381);
-                            if (randValue % 20 == 0)
-                            {
-                                appleY = randValue;
-                                for (int j = 0; j < playerBody.Count; j++)
-                                {
-                                    if (appleX == playerBody[j].X && appleY == playerBody[j].Y)
-                                    {
-                                        appleX = 0;
-                                        appleY = 0;
-                                    }
-                                }
-                                for (int j = 0; j < player2Body.Count; j++)
-                                {
-                                    if (appleX == player2Body[j].X && appleY == player2Body[j].Y)
-                                    {
-                                        appleX = 0;
-                                        appleY = 0;
-                                    }
-                                }
-                                player1Score++;
-                                apple = new Rectangle(appleX, appleY, 20, 20);
-                                if (lastDirection == 1)
-                                {
-                                    Rectangle playerTail = new Rectangle(0, 0, 20, 20);
-                                    playerBody.Add(playerTail);
-                                    i = 0;
-                                }
-                                else if (lastDirection == 2)
-                                {
-                                    Rectangle playerTail = new Rectangle(0, 0, 20, 20);
-                                    playerBody.Add(playerTail);
-                                    i = 0;
-                                }
-                                else if (lastDirection == 3)
-                                {
-                                    Rectangle playerTail = new Rectangle(0, 0, 20, 20);
-                                    playerBody.Add(playerTail);
-                                    i = 0;
-                                }
-                                else if (lastDirection == 4)
-                                {
-                                    Rectangle playerTail = new Rectangle(0, 0, 20, 20);
-                                    playerBody.Add(playerTail);
-                                    i = 0;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                //move the player if they change their direction of movement
-                if (wDown == true && lastDirection != 3)
-                {
-                    //create new body part for head at 0
-                    int Y = playerBody[0].Y - playerSpeed;
-                    Rectangle player = new Rectangle(playerBody[0].X, Y, 20, 20);
-                    playerBody.Insert(0, player);
-                    if (playerBody.Count > 1)
-                    {
-                        playerBody.RemoveAt(playerBody.Count - 1);
-                    }
-
-                    lastDirection = 1;
-                }
-                if (aDown == true && lastDirection != 4)
-                {
-                    //create new body part for head at 0
-                    int X = playerBody[0].X - playerSpeed;
-                    Rectangle player = new Rectangle(X, playerBody[0].Y, 20, 20);
-                    playerBody.Insert(0, player);
-                    if (playerBody.Count > 1)
-                    {
-                        playerBody.RemoveAt(playerBody.Count - 1);
-                    }
-
-                    lastDirection = 2;
-                }
-                if (sDown == true && lastDirection != 1)
-                {
-                    //create new body part for head at 0
-                    int Y = playerBody[0].Y + playerSpeed;
-                    Rectangle player = new Rectangle(playerBody[0].X, Y, 20, 20);
-                    playerBody.Insert(0, player);
-                    if (playerBody.Count > 1)
-                    {
-                        playerBody.RemoveAt(playerBody.Count - 1);
-                    }
-
-                    lastDirection = 3;
-                }
-                if (dDown == true && lastDirection != 2)
-                {
-                    //create new body part for head at 0
-                    int X = playerBody[0].X + playerSpeed;
-                    Rectangle player = new Rectangle(X, playerBody[0].Y, 20, 20);
-                    playerBody.Insert(0, player);
-                    if (playerBody.Count > 1)
-                    {
-                        playerBody.RemoveAt(playerBody.Count - 1);
-                    }
-                    lastDirection = 4;
-                }
-
-                //checking if the player has collided with a wall
-                if (playerBody[0].Y < 0)
-                {
-                    gameState = "player2Win";
-                    gameTimer.Enabled = false;
-                }
-                else if (playerBody[0].X < 0)
-                {
-                    gameState = "player2Win";
-                    gameTimer.Enabled = false;
-                }
-                else if (playerBody[0].X > this.Width - playerHead.Width)
-                {
-                    gameState = "player2Win";
-                    gameTimer.Enabled = false;
-                }
-                else if (playerBody[0].Y > this.Height - playerHead.Height)
-                {
-                    gameState = "player2Win";
-                    gameTimer.Enabled = false;
-                }
-
-                //checking if the player colided with the body of the snake
-                for (int i = 0; i < playerBody.Count; i++)
-                {
-                    if (playerBody[0].IntersectsWith(playerBody[i]) && i > 1)
-                    {
-                        gameState = "player2Win";
-                        gameTimer.Enabled = false;
-                    }
-                }
-                for (int i = 0; i < player2Body.Count; i++)
-                {
-                    if (playerBody[0].IntersectsWith(player2Body[i]) && i > 1)
-                    {
-                        gameState = "player2Win";
-                        gameTimer.Enabled = false;
-                    }
-                    else if (playerBody[0].IntersectsWith(player2Body[0]))
-                    {
-                        if (player1Score > player2Score)
-                        {
-                            gameState = "player1Win";
-                            gameTimer.Enabled = false;
-                        }
-                        else if (player2Score > player1Score)
-                        {
-                            gameState = "player2Win";
-                            gameTimer.Enabled = false;
-                        }
-                        else
-                        {
-                            gameState = "draw";
-                            gameTimer.Enabled = false;
-                        }
-                    }
-                }
+                player1();
 
                 //player 2 code
                 //check if a player has collided with an apple and giving them a point
@@ -880,25 +567,25 @@ namespace Snake
                                 apple = new Rectangle(appleX, appleY, 20, 20);
                                 if (lastDirection2 == 1)
                                 {
-                                    Rectangle playerTail = new Rectangle(0, 0, 20, 20);
+                                    Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
                                     player2Body.Add(playerTail);
                                     i = 0;
                                 }
                                 else if (lastDirection2 == 2)
                                 {
-                                    Rectangle playerTail = new Rectangle(0, 0, 20, 20);
+                                    Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
                                     player2Body.Add(playerTail);
                                     i = 0;
                                 }
                                 else if (lastDirection2 == 3)
                                 {
-                                    Rectangle playerTail = new Rectangle(0, 0, 20, 20);
+                                    Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
                                     player2Body.Add(playerTail);
                                     i = 0;
                                 }
                                 else if (lastDirection2 == 4)
                                 {
-                                    Rectangle playerTail = new Rectangle(0, 0, 20, 20);
+                                    Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
                                     player2Body.Add(playerTail);
                                     i = 0;
                                 }
@@ -907,57 +594,60 @@ namespace Snake
                     }
                 }
 
-                //move the player if they change their direction of movement
-                if (upDown == true && lastDirection2 != 3)
+                if (frameCounter2 % 5 == 0)
                 {
-                    //create new body part for head at 0
-                    int Y = player2Body[0].Y - playerSpeed;
-                    Rectangle player = new Rectangle(player2Body[0].X, Y, 20, 20);
-                    player2Body.Insert(0, player);
-                    if (player2Body.Count > 1)
+                    //move the player if they change their direction of movement
+                    if (upDown == true && lastDirection2 != 3)
                     {
-                        player2Body.RemoveAt(player2Body.Count - 1);
-                    }
+                        //create new body part for head at 0
+                        int Y = player2Body[0].Y - playerSpeed;
+                        Rectangle player = new Rectangle(player2Body[0].X, Y, 20, 20);
+                        player2Body.Insert(0, player);
+                        if (player2Body.Count > 1)
+                        {
+                            player2Body.RemoveAt(player2Body.Count - 1);
+                        }
 
-                    lastDirection2 = 1;
-                }
-                if (leftDown == true && lastDirection2 != 4)
-                {
-                    //create new body part for head at 0
-                    int X = player2Body[0].X - playerSpeed;
-                    Rectangle player = new Rectangle(X, player2Body[0].Y, 20, 20);
-                    player2Body.Insert(0, player);
-                    if (player2Body.Count > 1)
-                    {
-                        player2Body.RemoveAt(player2Body.Count - 1);
+                        lastDirection2 = 1;
                     }
+                    if (leftDown == true && lastDirection2 != 4)
+                    {
+                        //create new body part for head at 0
+                        int X = player2Body[0].X - playerSpeed;
+                        Rectangle player = new Rectangle(X, player2Body[0].Y, 20, 20);
+                        player2Body.Insert(0, player);
+                        if (player2Body.Count > 1)
+                        {
+                            player2Body.RemoveAt(player2Body.Count - 1);
+                        }
 
-                    lastDirection2 = 2;
-                }
-                if (downDown == true && lastDirection2 != 1)
-                {
-                    //create new body part for head at 0
-                    int Y = player2Body[0].Y + playerSpeed;
-                    Rectangle player = new Rectangle(player2Body[0].X, Y, 20, 20);
-                    player2Body.Insert(0, player);
-                    if (player2Body.Count > 1)
-                    {
-                        player2Body.RemoveAt(player2Body.Count - 1);
+                        lastDirection2 = 2;
                     }
+                    if (downDown == true && lastDirection2 != 1)
+                    {
+                        //create new body part for head at 0
+                        int Y = player2Body[0].Y + playerSpeed;
+                        Rectangle player = new Rectangle(player2Body[0].X, Y, 20, 20);
+                        player2Body.Insert(0, player);
+                        if (player2Body.Count > 1)
+                        {
+                            player2Body.RemoveAt(player2Body.Count - 1);
+                        }
 
-                    lastDirection2 = 3;
-                }
-                if (rightDown == true && lastDirection2 != 2)
-                {
-                    //create new body part for head at 0
-                    int X = player2Body[0].X + playerSpeed;
-                    Rectangle player = new Rectangle(X, player2Body[0].Y, 20, 20);
-                    player2Body.Insert(0, player);
-                    if (player2Body.Count > 1)
-                    {
-                        player2Body.RemoveAt(player2Body.Count - 1);
+                        lastDirection2 = 3;
                     }
-                    lastDirection2 = 4;
+                    if (rightDown == true && lastDirection2 != 2)
+                    {
+                        //create new body part for head at 0
+                        int X = player2Body[0].X + playerSpeed;
+                        Rectangle player = new Rectangle(X, player2Body[0].Y, 20, 20);
+                        player2Body.Insert(0, player);
+                        if (player2Body.Count > 1)
+                        {
+                            player2Body.RemoveAt(player2Body.Count - 1);
+                        }
+                        lastDirection2 = 4;
+                    }
                 }
 
                 //checking if the player has collided with a wall
@@ -1009,10 +699,10 @@ namespace Snake
                         }
                     }
                 }
+                frameCounter2++;
             }
             Refresh();
         }
-
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
@@ -1149,6 +839,166 @@ namespace Snake
                 displayLeaderboardButton.Visible = false;
                 leaderboardLabel.Visible = true;
             }
+        }
+
+        public void player1()
+        {
+            //check if a player has collided with an apple and giving them a point
+            for (int i = 0; i < 20; i++)
+            {
+                if (playerBody[0].IntersectsWith(apple))
+                {
+                    if (i > 1)
+                    {
+                        i = 0;
+                    }
+                    randValue = randGen.Next(1, 581);
+                    if (randValue % 20 == 0)
+                    {
+                        if (i > 1)
+                        {
+                            i = 0;
+                        }
+                        appleX = randValue;
+                        randValue = randGen.Next(1, 381);
+                        if (randValue % 20 == 0)
+                        {
+                            appleY = randValue;
+                            for (int j = 0; j < playerBody.Count; j++)
+                            {
+                                if (appleX == playerBody[j].X && appleY == playerBody[j].Y)
+                                {
+                                    appleX = 0;
+                                    appleY = 0;
+                                    i = 0;
+                                }
+                            }
+                            apple = new Rectangle(appleX, appleY, 20, 20);
+                            player1Score++;
+
+                            if (lastDirection == 1)
+                            {
+                                Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
+                                playerBody.Add(playerTail);
+                                i = 0;
+                            }
+                            else if (lastDirection == 2)
+                            {
+                                Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
+                                playerBody.Add(playerTail);
+                                i = 0;
+                            }
+                            else if (lastDirection == 3)
+                            {
+                                Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
+                                playerBody.Add(playerTail);
+                                i = 0;
+                            }
+                            else if (lastDirection == 4)
+                            {
+                                Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
+                                playerBody.Add(playerTail);
+                                i = 0;
+                            }
+                        }
+                    }
+                }
+            }
+            if (frameCounter % 5 == 0)
+            {
+                //move the player if they change their direction of movement
+                if (wDown == true && lastDirection != 3)
+                {
+                    //create new body part for head at 0
+                    int Y = playerBody[0].Y - playerSpeed;
+                    Rectangle player = new Rectangle(playerBody[0].X, Y, 20, 20);
+                    playerBody.Insert(0, player);
+                    if (playerBody.Count > 1)
+                    {
+                        playerBody.RemoveAt(playerBody.Count - 1);
+                    }
+
+                    lastDirection = 1;
+                }
+                if (aDown == true && lastDirection != 4)
+                {
+                    //create new body part for head at 0
+                    int X = playerBody[0].X - playerSpeed;
+                    Rectangle player = new Rectangle(X, playerBody[0].Y, 20, 20);
+                    playerBody.Insert(0, player);
+                    if (playerBody.Count > 1)
+                    {
+                        playerBody.RemoveAt(playerBody.Count - 1);
+                    }
+
+                    lastDirection = 2;
+                }
+                if (sDown == true && lastDirection != 1)
+                {
+                    //create new body part for head at 0
+                    int Y = playerBody[0].Y + playerSpeed;
+                    Rectangle player = new Rectangle(playerBody[0].X, Y, 20, 20);
+                    playerBody.Insert(0, player);
+                    if (playerBody.Count > 1)
+                    {
+                        playerBody.RemoveAt(playerBody.Count - 1);
+                    }
+
+                    lastDirection = 3;
+                }
+                if (dDown == true && lastDirection != 2)
+                {
+                    //create new body part for head at 0
+                    int X = playerBody[0].X + playerSpeed;
+                    Rectangle player = new Rectangle(X, playerBody[0].Y, 20, 20);
+                    playerBody.Insert(0, player);
+                    if (playerBody.Count > 1)
+                    {
+                        playerBody.RemoveAt(playerBody.Count - 1);
+                    }
+                    lastDirection = 4;
+                }
+            }
+
+            //checking if the player has collided with a wall
+            if (playerBody[0].Y < 0)
+            {
+                gameState = "lost1Player";
+                gameTimer.Enabled = false;
+            }
+            else if (playerBody[0].X < 0)
+            {
+                gameState = "lost1Player";
+                gameTimer.Enabled = false;
+            }
+            else if (playerBody[0].X > this.Width - playerHead.Width)
+            {
+                gameState = "lost1Player";
+                gameTimer.Enabled = false;
+            }
+            else if (playerBody[0].Y > this.Height - playerHead.Height)
+            {
+                gameState = "lost1Player";
+                gameTimer.Enabled = false;
+            }
+
+            //checking if the player colided with the body of the snake
+            for (int i = 0; i < playerBody.Count; i++)
+            {
+                if (playerBody[0].IntersectsWith(playerBody[i]) && i > 1)
+                {
+                    gameState = "lost1Player";
+                    gameTimer.Enabled = false;
+                }
+            }
+
+            //checking if the player won
+            if (player1Score == 600)
+            {
+                gameState = "won1Player";
+                gameTimer.Enabled = false;
+            }
+            frameCounter++;
         }
     }
 }

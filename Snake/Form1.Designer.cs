@@ -42,7 +42,7 @@
             // 
             // gameTimer
             // 
-            this.gameTimer.Interval = 125;
+            this.gameTimer.Interval = 25;
             this.gameTimer.Tick += new System.EventHandler(this.gameTimer_Tick);
             // 
             // titleLabel
