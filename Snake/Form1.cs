@@ -412,18 +412,33 @@ namespace Snake
 
             for (int i = 0; i < playerScores.Count; i++)
             {
-                int baller = Convert.ToInt32(playerScores[i]);
-                for (int j = 0; j < playerScores.Count; j++)
+                int currentMin = Convert.ToInt32(playerScores[i]);
+                int currentMinIndex = i;
+                string currentMinName = playerNames[i];
+
+                for (int j = i + 1; j < playerScores.Count; j++)
                 {
-                    if (baller < Convert.ToInt32(playerScores[j]))
+                    if (currentMin > Convert.ToInt32(playerScores[j]))
                     {
-                        tempList.Insert(0, playerScores[j]);
-                        tempList.Insert(0, playerNames[j]);
-                        playerNames.RemoveAt(j);
-                        playerScores.RemoveAt(j);
+                        currentMin = Convert.ToInt32(playerScores[j]);
+                        currentMinIndex = j;
                     }
                 }
+                if (currentMinIndex != i)
+                {
+                    playerScores[currentMinIndex] = playerScores[i];
+                    playerScores[i] = Convert.ToString(currentMin);
+                    playerNames[currentMinIndex] = playerNames[i];
+                    playerNames[i] = currentMinName;
+                }
             }
+
+            for (int i = 0; i < playerScores.Count;i++)
+            {
+                tempList.Add(playerScores[i]);
+                tempList.Add(playerNames[i]);
+            }
+            tempList.Reverse();
 
             for (int i = 0; i < tempList.Count;i++)
             {
@@ -826,6 +841,7 @@ namespace Snake
                 scoreLabel2.Visible = false;
                 leaderboardLabel.Visible = false;
                 leaderboardButton.Visible = false;
+                usernameInput.Visible = false;
                 displayLeaderboardButton.Visible = true;
             }
             else if (gameState == "leaderboard")
@@ -1002,3 +1018,5 @@ namespace Snake
         }
     }
 }
+//funny moment
+//https://www.youtube.com/watch?v=HZCKddHYgPM
