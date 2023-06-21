@@ -819,6 +819,9 @@ namespace Snake
                 subtitleLabel.Text = $"Player 1 wins with a score of {player1Score}\nPress space to play single player, press G to play 2 player or press escape to exit";
                 scoreLabel.Text = "";
                 scoreLabel2.Text = "";
+
+                leaderboardButton.Visible = false;
+                usernameInput.Visible = false;
             }
             else if (gameState == "player2Win")
             {
@@ -826,6 +829,9 @@ namespace Snake
                 subtitleLabel.Text = $"Player 2 wins with a score of {player2Score}\nPress space to play single player, press G to play 2 player or press escape to exit";
                 scoreLabel.Text = "";
                 scoreLabel2.Text = "";
+
+                leaderboardButton.Visible = false;
+                usernameInput.Visible = false;
             }
             else if (gameState == "draw")
             {
@@ -833,11 +839,15 @@ namespace Snake
                 subtitleLabel.Text = $"Game was a draw :/\nPress space to play single player, press G to play 2 player or press escape to exit";
                 scoreLabel.Text = "";
                 scoreLabel2.Text = "";
+
+                leaderboardButton.Visible = false;
+                usernameInput.Visible = false;
             }
             else if (gameState == "beforeLeaderboard")
             {
                 titleLabel.Visible = true;
                 subtitleLabel.Visible = true;
+                subtitleLabel.Text = "Your score has been added to the leaderboard";
                 scoreLabel.Visible = false;
                 scoreLabel2.Visible = false;
                 leaderboardLabel.Visible = false;
@@ -861,7 +871,7 @@ namespace Snake
         public void player1()
         {
             //check if a player has collided with an apple and giving them a point
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 10000; i++)
             {
                 if (playerBody[0].IntersectsWith(apple))
                 {
@@ -888,8 +898,10 @@ namespace Snake
                                     appleX = 0;
                                     appleY = 0;
                                     i = 0;
+                                    j = 0;
                                 }
                             }
+
                             apple = new Rectangle(appleX, appleY, 20, 20);
                             player1Score++;
 
