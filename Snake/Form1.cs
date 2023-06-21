@@ -421,6 +421,7 @@ namespace Snake
                     if (currentMin > Convert.ToInt32(playerScores[j]))
                     {
                         currentMin = Convert.ToInt32(playerScores[j]);
+                        currentMinName = playerNames[j];
                         currentMinIndex = j;
                     }
                 }
