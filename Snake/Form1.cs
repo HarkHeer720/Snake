@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+Harkaran Heer
+Snake
+2023-06-22
+Recreation of the classic nokia game snake made with a 2 player mode and leaderboard
+*/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -58,13 +65,37 @@ namespace Snake
         SolidBrush limeGreenBrush = new SolidBrush(Color.LimeGreen);
         SolidBrush redBrush = new SolidBrush(Color.Red);
 
+        //creating soundplayers
+        SoundPlayer deathSound = new SoundPlayer(Properties.Resources.baller);
+        SoundPlayer appleSound = new SoundPlayer(Properties.Resources.bruh);
+
         public mainScreen()
         {
             InitializeComponent();
+
+            List<string> tempList = new List<string>();
+
+            //adds all values from the leaderboard text file to a temporary list
+            tempList = File.ReadAllLines("leaderboard.txt").ToList();
+
+            //seperates those items into the 2 respective lists
+            for (int i = 0; i < tempList.Count; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    playerNames.Add(tempList[i]);
+                }
+                else if (i % 2 != 0)
+                {
+                    playerScores.Add(tempList[i]);
+                }
+            }
         }
 
+        //resets variables and initializes for 1 player
         public void gameInitializer1Player()
         {
+            //resetting values and clearing lists
             playerBody.Clear();
             player1Score = 1;
 
@@ -79,6 +110,7 @@ namespace Snake
             sDown = false;
             dDown = false;
 
+            //spawns the player on a random location
             for (int i = 0; i < 10000; i++)
             {
                 randValue = randGen.Next(1, 581);
@@ -96,6 +128,7 @@ namespace Snake
                 }
             }
 
+            //spawns in the apple on a random location
             for (int i = 0; i < 10000; i++)
             {
                 randValue = randGen.Next(1, 581);
@@ -117,28 +150,14 @@ namespace Snake
                 }
             }
 
-            List<string> tempList = new List<string>();
-
-            tempList = File.ReadAllLines("leaderboard.txt").ToList();
-
-            for (int i = 0; i < tempList.Count; i++)
-            {
-                if (i % 2 == 0)
-                {
-                    playerNames.Add(tempList[i]);
-                }
-                else if (i % 2 != 0)
-                {
-                    playerScores.Add(tempList[i]);
-                }
-            }
-
             gameState = "1Player";
             gameTimer.Enabled = true;
         }
 
+        //resets variables and initializes for 2 player
         public void gameInitializer2Player()
         {
+            //resetting values and clearing lists
             playerBody.Clear();
             player2Body.Clear();
 
@@ -163,6 +182,7 @@ namespace Snake
             downDown = false;
             rightDown = false;
 
+            //randomizing player 1's start square
             for (int i = 0; i < 10000; i++)
             {
                 if (i == 9999)
@@ -188,6 +208,7 @@ namespace Snake
                 }
             }
 
+            //random spawns the apple
             for (int i = 0; i < 10000; i++)
             {
                 if (i > 9999)
@@ -221,6 +242,7 @@ namespace Snake
                 }
             }
 
+            //randomizing player 2's start square
             for (int i = 0; i < 10000; i++)
             {
                 if (i > 9999)
@@ -260,6 +282,7 @@ namespace Snake
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+            //reading the key presses
             switch (e.KeyCode)
             {
                 case Keys.W:
@@ -335,18 +358,17 @@ namespace Snake
                     }
                     break;
                 case Keys.Escape:
-                    if (gameState == "start" || gameState == "won1Player" || gameState == "lost1Player" || gameState == "draw" || gameState == "player1Win" || gameState == "player2Win")
+                    if (gameState == "start" || gameState == "won1Player" || gameState == "lost1Player" || gameState == "draw" || gameState == "player1Win" || gameState == "player2Win" || gameState == "beforeLeaderboard" || gameState == "leaderboard")
                     {
-
+                        Application.Exit();
                     }
                     else if (gameState == "1Player" || gameState == "2Player")
                     {
 
                     }
-                    Application.Exit();
                     break;
                 case Keys.Space:
-                    if (gameState == "start" || gameState == "won1Player" || gameState == "lost1Player" || gameState == "draw" || gameState == "player1Win" || gameState == "player2Win")
+                    if (gameState == "start" || gameState == "won1Player" || gameState == "lost1Player" || gameState == "draw" || gameState == "player1Win" || gameState == "player2Win" || gameState == "beforeLeaderboard" || gameState == "leaderboard")
                     {
                         gameInitializer1Player();
                     }
@@ -363,16 +385,6 @@ namespace Snake
                     else if (gameState == "playing" || gameState == "2Player")
                     {
 
-                    }
-                    break;
-                case Keys.C:
-                    if (gameTimer.Enabled == true)
-                    {
-                        gameTimer.Enabled = false;
-                    }
-                    else if (gameTimer.Enabled == false)
-                    {
-                        gameTimer.Enabled = true;
                     }
                     break;
             }
@@ -579,30 +591,40 @@ namespace Snake
                                         i = 0;
                                     }
                                 }
-                                player2Score++;
-                                apple = new Rectangle(appleX, appleY, 20, 20);
-                                if (lastDirection2 == 1)
+
+                                if (appleX != 0 && appleY != 0)
                                 {
-                                    Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
-                                    player2Body.Add(playerTail);
-                                    i = 0;
+                                    player2Score++;
+                                    apple = new Rectangle(appleX, appleY, 20, 20);
+                                    appleSound.Play();
+
+                                    if (lastDirection2 == 1)
+                                    {
+                                        Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
+                                        player2Body.Add(playerTail);
+                                        i = 0;
+                                    }
+                                    else if (lastDirection2 == 2)
+                                    {
+                                        Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
+                                        player2Body.Add(playerTail);
+                                        i = 0;
+                                    }
+                                    else if (lastDirection2 == 3)
+                                    {
+                                        Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
+                                        player2Body.Add(playerTail);
+                                        i = 0;
+                                    }
+                                    else if (lastDirection2 == 4)
+                                    {
+                                        Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
+                                        player2Body.Add(playerTail);
+                                        i = 0;
+                                    }
                                 }
-                                else if (lastDirection2 == 2)
+                                else if (appleX == 0 && appleY == 0)
                                 {
-                                    Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
-                                    player2Body.Add(playerTail);
-                                    i = 0;
-                                }
-                                else if (lastDirection2 == 3)
-                                {
-                                    Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
-                                    player2Body.Add(playerTail);
-                                    i = 0;
-                                }
-                                else if (lastDirection2 == 4)
-                                {
-                                    Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
-                                    player2Body.Add(playerTail);
                                     i = 0;
                                 }
                             }
@@ -670,21 +692,25 @@ namespace Snake
                 if (player2Body[0].Y < 0)
                 {
                     gameState = "player1Win";
+                    deathSound.Play();
                     gameTimer.Enabled = false;
                 }
                 else if (player2Body[0].X < 0)
                 {
                     gameState = "player1Win";
+                    deathSound.Play();
                     gameTimer.Enabled = false;
                 }
                 else if (player2Body[0].X > this.Width - playerHead.Width)
                 {
                     gameState = "player1Win";
+                    deathSound.Play();
                     gameTimer.Enabled = false;
                 }
                 else if (player2Body[0].Y > this.Height - playerHead.Height)
                 {
                     gameState = "player1Win";
+                    deathSound.Play();
                     gameTimer.Enabled = false;
                 }
 
@@ -694,6 +720,7 @@ namespace Snake
                     if (player2Body[0].IntersectsWith(player2Body[i]) && i > 1)
                     {
                         gameState = "player1Win";
+                        deathSound.Play();
                         gameTimer.Enabled = false;
                     }
                     else if (player2Body[0].IntersectsWith(playerBody[0]))
@@ -701,16 +728,19 @@ namespace Snake
                         if (player1Score > player2Score)
                         {
                             gameState = "player1Win";
+                            deathSound.Play();
                             gameTimer.Enabled = false;
                         }
                         else if (player2Score > player1Score)
                         {
                             gameState = "player2Win";
+                            deathSound.Play();
                             gameTimer.Enabled = false;
                         }
                         else
                         {
                             gameState = "draw";
+                            deathSound.Play();
                             gameTimer.Enabled = false;
                         }
                     }
@@ -902,31 +932,39 @@ namespace Snake
                                 }
                             }
 
-                            apple = new Rectangle(appleX, appleY, 20, 20);
-                            player1Score++;
+                            if (appleX != 0 && appleY != 0)
+                            {
+                                apple = new Rectangle(appleX, appleY, 20, 20);
+                                player1Score++;
+                                appleSound.Play();
 
-                            if (lastDirection == 1)
-                            {
-                                Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
-                                playerBody.Add(playerTail);
-                                i = 0;
+                                if (lastDirection == 1)
+                                {
+                                    Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
+                                    playerBody.Add(playerTail);
+                                    i = 0;
+                                }
+                                else if (lastDirection == 2)
+                                {
+                                    Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
+                                    playerBody.Add(playerTail);
+                                    i = 0;
+                                }
+                                else if (lastDirection == 3)
+                                {
+                                    Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
+                                    playerBody.Add(playerTail);
+                                    i = 0;
+                                }
+                                else if (lastDirection == 4)
+                                {
+                                    Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
+                                    playerBody.Add(playerTail);
+                                    i = 0;
+                                }
                             }
-                            else if (lastDirection == 2)
+                            else if (appleX == 0 && appleY == 0)
                             {
-                                Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
-                                playerBody.Add(playerTail);
-                                i = 0;
-                            }
-                            else if (lastDirection == 3)
-                            {
-                                Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
-                                playerBody.Add(playerTail);
-                                i = 0;
-                            }
-                            else if (lastDirection == 4)
-                            {
-                                Rectangle playerTail = new Rectangle(-20, 0, 20, 20);
-                                playerBody.Add(playerTail);
                                 i = 0;
                             }
                         }
@@ -993,21 +1031,25 @@ namespace Snake
             if (playerBody[0].Y < 0)
             {
                 gameState = "lost1Player";
+                deathSound.Play();
                 gameTimer.Enabled = false;
             }
             else if (playerBody[0].X < 0)
             {
                 gameState = "lost1Player";
+                deathSound.Play();
                 gameTimer.Enabled = false;
             }
             else if (playerBody[0].X > this.Width - playerHead.Width)
             {
                 gameState = "lost1Player";
+                deathSound.Play();
                 gameTimer.Enabled = false;
             }
             else if (playerBody[0].Y > this.Height - playerHead.Height)
             {
                 gameState = "lost1Player";
+                deathSound.Play();
                 gameTimer.Enabled = false;
             }
 
@@ -1017,6 +1059,7 @@ namespace Snake
                 if (playerBody[0].IntersectsWith(playerBody[i]) && i > 1)
                 {
                     gameState = "lost1Player";
+                    deathSound.Play();
                     gameTimer.Enabled = false;
                 }
             }

@@ -59,5 +59,23 @@ namespace Snake.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream baller {
+            get {
+                return ResourceManager.GetStream("baller", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream bruh {
+            get {
+                return ResourceManager.GetStream("bruh", resourceCulture);
+            }
+        }
     }
 }

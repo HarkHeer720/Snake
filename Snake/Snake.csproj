@@ -52,18 +52,6 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="LargeScreen.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="LargeScreen.Designer.cs">
-      <DependentUpon>LargeScreen.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MediumScreen.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MediumScreen.Designer.cs">
-      <DependentUpon>MediumScreen.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -88,21 +76,18 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Resources\checkerBoard" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\background.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\checkerBoard2.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="leaderboard.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Bruh - Sound Effect %28HD%29.wav" />
+    <None Include="Resources\baller %281%29.wav" />
+    <None Include="Resources\Minecraft TNT Explosion - Sound Effect %28HD%29.wav" />
+    <None Include="Resources\baller.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
